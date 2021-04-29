@@ -16,16 +16,19 @@ function App() {
         componentKey: 'text',
         top: 100,
         left: 100,
+        adjustPostion: true,
       },
       {
         componentKey: 'button',
         top: 200,
         left: 200,
+        adjustPostion: true,
       },
       {
         componentKey: 'input',
         top: 300,
         left: 300,
+        adjustPostion: true,
       },
     ],
   })

@@ -1,5 +1,6 @@
-import React, { CSSProperties, useMemo } from 'react'
+import React, { CSSProperties, useEffect, useMemo, useRef } from 'react'
 import { EditorBlock, EditorConfig } from './Editor.utils'
+import { useUpdate } from './hook/useUpdate'
 
 interface IProps {
   block: EditorBlock,
@@ -11,6 +12,21 @@ export const Block: React.FC<IProps> = (props) => {
     block,
     config,
   } = props
+
+  const { forceUpdate } = useUpdate()
+
+  const elRef = useRef({} as HTMLDivElement)
+
+  useEffect(() => {
+    if (block.adjustPostion) {
+      const { height, width } = elRef.current.getBoundingClientRect()
+      block.adjustPostion = false
+      block.top = block.top - height / 2
+      block.left = block.left - width / 2
+      forceUpdate()
+    }
+  }, [])
+
   const styles: CSSProperties = useMemo(() => {
     return {
       top: `${block.top}px`,
@@ -24,7 +40,7 @@ export const Block: React.FC<IProps> = (props) => {
     render = component.render()
   }
   return (
-    <div className="editor-block" style={styles}>
+    <div className="editor-block" style={styles} ref={elRef}>
       {render}
     </div>
   )

@@ -3,6 +3,7 @@ export interface EditorBlock {
   componentKey: string,
   top: number,
   left: number,
+  adjustPostion: boolean,
 }
 
 // 编辑器编辑的数据类型
@@ -66,5 +67,6 @@ export function createBlock({
     top,
     left,
     componentKey: component.key,
+    adjustPostion: true,
   }
 }
