@@ -31,8 +31,9 @@ export const Block: React.FC<IProps> = (props) => {
     return {
       top: `${block.top}px`,
       left: `${block.left}px`,
+      opacity: block.adjustPostion ? '0' : ''
     }
-  }, [block.left, block.top])
+  }, [block.left, block.top, block.adjustPostion])
 
   const component = config.componentMap[block.componentKey]
   let render: any
