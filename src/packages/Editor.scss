@@ -45,7 +45,7 @@ $primary: #409EFF; // 基础色
       border: 1px solid $ibc;
       box-sizing: border-box;
       padding: 20px;
-      .editor-menu_item {
+      .editor-menu-item {
         border: 2px solid $ibc;
         margin-bottom: 20px;
         position: relative;
@@ -63,7 +63,7 @@ $primary: #409EFF; // 基础色
           border-color: $primary;
           cursor: move;
         }
-        .editor-menu_item--name {
+        .editor-menu-item-name {
           position: absolute;
           top: -2px;
           left: -2px;
@@ -90,6 +90,28 @@ $primary: #409EFF; // 基础色
       padding-top: $headSize;
       padding-bottom: 300px;
       background-color: #f6f6f6;
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+      .editor-container {
+        background-color: white;
+        .editor-block {
+          &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+  .editor-container {
+    position: relative;
+    .editor-block {
+      position: absolute;
     }
   }
 }

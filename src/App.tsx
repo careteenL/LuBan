@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import 'antd/dist/antd.css'
 import { config } from './config'
 import { Editor } from './packages/Editor'
 import { EditorValue } from './packages/Editor.utils'
@@ -10,7 +11,23 @@ function App() {
       height: 700,
       width: 1000,
     },
-    blocks: [],
+    blocks: [
+      {
+        componentKey: 'text',
+        top: 100,
+        left: 100,
+      },
+      {
+        componentKey: 'button',
+        top: 200,
+        left: 200,
+      },
+      {
+        componentKey: 'input',
+        top: 300,
+        left: 300,
+      },
+    ],
   })
 
   return (
