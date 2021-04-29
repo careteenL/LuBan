@@ -50,3 +50,21 @@ export function createConfig() {
 }
 
 export type EditorConfig = ReturnType<typeof createConfig>
+
+interface CreateBlock {
+  top: number,
+  left: number,
+  component: EditorCompoent,
+}
+
+export function createBlock({
+  top,
+  left,
+  component,
+}: CreateBlock): EditorBlock {
+  return {
+    top,
+    left,
+    componentKey: component.key,
+  }
+}
