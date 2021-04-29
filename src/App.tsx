@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { useCallbackRef } from './packages/hook/useCallbackRef'
 
 function App() {
   const [pos, setPos] = useState({
@@ -16,7 +17,7 @@ function App() {
       startX: 0,
       startY: 0,
     })
-    const mousedown = (e: React.MouseEvent<HTMLElement>) => {
+    const mousedown = useCallbackRef((e: React.MouseEvent<HTMLElement>) => {
       document.addEventListener('mousemove', mousemove)
       document.addEventListener('mouseup', mouseup)
       dragData.current = {
@@ -25,12 +26,12 @@ function App() {
         startX: e.clientX,
         startY: e.clientY,
       }
-    }
-    const mousemove = (e: MouseEvent) => {
+    })
+    const mousemove = useCallbackRef((e: MouseEvent) => {
       // console.log(JSON.stringify(pos))
       console.log({
         pos: `${pos.left}_${pos.top}`,
-        ref: `${posRef.current.left}_${posRef.current.top}`,
+        // ref: `${posRef.current.left}_${posRef.current.top}`,
       })
       const {
         startLeft,
@@ -44,11 +45,11 @@ function App() {
         top: startTop + durY,
         left: startLeft + durX,
       })
-    }
-    const mouseup = (e: MouseEvent) => {
+    })
+    const mouseup = useCallbackRef((e: MouseEvent) => {
       document.removeEventListener('mousemove', mousemove)
-      document.removeEventListener('mouseup', mouseup)      
-    }
+      document.removeEventListener('mouseup', mouseup)
+    })
     return {
       mousedown,
     }
