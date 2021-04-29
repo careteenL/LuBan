@@ -43,6 +43,36 @@ $primary: #409EFF; // 基础色
       width: $menuSize;
       background-color: white;
       border: 1px solid $ibc;
+      box-sizing: border-box;
+      padding: 20px;
+      .editor-menu_item {
+        border: 2px solid $ibc;
+        margin-bottom: 20px;
+        position: relative;
+        padding: 40px 16px 20px 16px;
+        text-align: center;
+        &::after {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          content: '';
+        }
+        &:hover {
+          border-color: $primary;
+          cursor: move;
+        }
+        .editor-menu_item--name {
+          position: absolute;
+          top: -2px;
+          left: -2px;
+          background-color: $primary;
+          font-size: 12px;
+          line-height: 2em;
+          padding: 0 20px;
+        }
+      }
     }
     &.editor-operator {
       top: 0;
