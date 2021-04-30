@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import React, { CSSProperties, useEffect, useMemo, useRef } from 'react'
 import { EditorBlock, EditorConfig } from './Editor.utils'
 import { useUpdate } from './hook/useUpdate'
@@ -5,12 +6,14 @@ import { useUpdate } from './hook/useUpdate'
 interface IProps {
   block: EditorBlock,
   config: EditorConfig,
+  onMouseDown?: (e: React.MouseEvent<HTMLDivElement>) => void,
 }
 
 export const Block: React.FC<IProps> = (props) => {
   const {
     block,
     config,
+    onMouseDown,
   } = props
 
   const { forceUpdate } = useUpdate()
@@ -35,13 +38,26 @@ export const Block: React.FC<IProps> = (props) => {
     }
   }, [block.left, block.top, block.adjustPostion])
 
+  const classes = useMemo(() => {
+    return classNames([
+      'editor-block', {
+        'editor-block-focus': block.focus,
+      },
+    ])
+  }, [block.focus])
+
   const component = config.componentMap[block.componentKey]
   let render: any
   if (!!component) {
     render = component.render()
   }
   return (
-    <div className="editor-block" style={styles} ref={elRef}>
+    <div 
+      className={classes}
+      style={styles} 
+      ref={elRef}
+      onMouseDown={onMouseDown}
+    >
       {render}
     </div>
   )

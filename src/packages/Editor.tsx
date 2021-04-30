@@ -1,8 +1,8 @@
 import React, { CSSProperties, useMemo, useRef } from 'react'
 import { Block } from './Block'
-import './Editor.scss'
-import { createBlock, EditorCompoent, EditorConfig, EditorValue } from './Editor.utils'
+import { createBlock, EditorBlock, EditorCompoent, EditorConfig, EditorValue } from './Editor.utils'
 import { useCallbackRef } from './hook/useCallbackRef'
+import './Editor.scss'
 
 interface IProps {
   value: EditorValue,
@@ -25,6 +25,35 @@ export const Editor: React.FC<IProps> = (props) => {
       height: value.container.height,
     }
   }, [value.container.height, value.container.width])
+
+  const focusData = useMemo(() => {
+    const focus: EditorBlock[] = []
+    const unFocus: EditorBlock[] = []
+    value.blocks.forEach(block => {
+      (block.focus ? focus : unFocus).push(block)
+    })
+    return {
+      focus,
+      unFocus,
+    }
+  }, [value.blocks])
+
+  const methods = {
+    updateBlocks: (blocks: EditorBlock[]) => {
+      onChange({
+        ...value,
+        blocks: [
+          ...blocks,
+        ],
+      })
+    },
+    clearFocus: (external?: EditorBlock) => {
+      (!!external ? focusData.focus.filter((item: EditorBlock) => item !== external) : focusData.focus).forEach((block: EditorBlock) => {
+        block.focus = false
+      })
+      methods.updateBlocks(value.blocks)
+    }
+  }
 
   const menuDraggier = (() => {
     const dragData = useRef({
@@ -72,6 +101,35 @@ export const Editor: React.FC<IProps> = (props) => {
     return block
   })()
 
+  const focusHandler = (() => {
+    const block = (e: React.MouseEvent<HTMLDivElement>, currentBlock: EditorBlock) => {
+      if (e.shiftKey) {
+        if (focusData.focus.length <= 1) {
+          currentBlock.focus = true
+        } else {
+          currentBlock.focus = !currentBlock.focus
+        }
+        methods.updateBlocks(value.blocks)
+      } else {
+        if (!currentBlock.focus) {
+          currentBlock.focus = true
+          methods.clearFocus(currentBlock)
+        }
+      }
+    }
+    const container = (e: React.MouseEvent<HTMLDivElement>) => {
+      if (e.target !== e.currentTarget) return
+      if (!e.shiftKey) {
+        methods.clearFocus()
+      }
+    }
+
+    return {
+      block,
+      container,
+    }
+  })()
+
   return (
     <div className="editor">
       <div className="editor-menu">
@@ -93,12 +151,18 @@ export const Editor: React.FC<IProps> = (props) => {
       <div className="editor-head">head</div>
       <div className="editor-operator">operator</div>
       <div className="editor-body">
-        <div className="editor-container" style={containerStyles} ref={containerRef}>
+        <div 
+          className="editor-container" 
+          style={containerStyles} 
+          ref={containerRef}
+          onMouseDown={focusHandler.container}
+        >
           {value.blocks.map((block, index) => (
             <Block 
               key={index}
               block={block}
               config={config}
+              onMouseDown={e => focusHandler.block(e, block)}
             />
           ))}
         </div>

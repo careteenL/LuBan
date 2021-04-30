@@ -104,6 +104,18 @@ $primary: #409EFF; // 基础色
             bottom: 0;
             left: 0;
           }
+          &.editor-block-focus {
+            &::before {
+              content: '';
+              position: absolute;
+              $size: 4px;
+              top: -$size;
+              left: -$size;
+              right: -$size;
+              bottom: -$size;
+              border: 1px dashed $primary;
+            }
+          }
         }
       }
     }

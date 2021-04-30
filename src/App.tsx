@@ -17,18 +17,21 @@ function App() {
         top: 100,
         left: 100,
         adjustPostion: true,
+        focus: false,
       },
       {
         componentKey: 'button',
         top: 200,
         left: 200,
         adjustPostion: true,
+        focus: false,
       },
       {
         componentKey: 'input',
         top: 300,
         left: 300,
         adjustPostion: true,
+        focus: false,
       },
     ],
   })
