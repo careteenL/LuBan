@@ -116,6 +116,7 @@ export const Editor: React.FC<IProps> = (props) => {
           methods.clearFocus(currentBlock)
         }
       }
+      setTimeout(() => blockDraggier.mousedown(e))
     }
     const container = (e: React.MouseEvent<HTMLDivElement>) => {
       if (e.target !== e.currentTarget) return
@@ -127,6 +128,47 @@ export const Editor: React.FC<IProps> = (props) => {
     return {
       block,
       container,
+    }
+  })()
+
+  const blockDraggier = (() => {
+    const dragData = useRef<{
+      startX: number,
+      startY: number,
+      startPosArray: {top: number, left: number}[]
+    }>({
+      startX: 0,
+      startY: 0,
+      startPosArray: [],
+    })
+
+    const mousedown = useCallbackRef((e: React.MouseEvent<HTMLDivElement>) => {
+      document.addEventListener('mousemove', mousemove)
+      document.addEventListener('mouseup', mouseup)
+      dragData.current = {
+        startX: e.clientX,
+        startY: e.clientY,
+        startPosArray: focusData.focus.map(({top, left}) => ({ top, left})),
+      }
+    })
+    const mousemove = useCallbackRef((e: MouseEvent) => {
+      const { startX, startY, startPosArray } = dragData.current
+      const { clientX: moveX, clientY: moveY } = e
+      const durY = moveY - startY
+      const durX = moveX - startX
+      focusData.focus.forEach((block, index) => {
+        const { top, left } = startPosArray[index]
+        block.top = top + durY
+        block.left = left + durX
+      })
+      methods.updateBlocks(value.blocks)
+    })
+    const mouseup = useCallbackRef((e: MouseEvent) => {
+      document.removeEventListener('mousemove', mousemove)
+      document.removeEventListener('mouseup', mouseup)
+    })
+    return {
+      mousedown,
     }
   })()
 

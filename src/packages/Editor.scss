@@ -96,6 +96,7 @@ $primary: #409EFF; // 基础色
       .editor-container {
         background-color: white;
         .editor-block {
+          user-select: none;
           &::after {
             content: '';
             position: absolute;
