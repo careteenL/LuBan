@@ -1,8 +1,24 @@
-import { defineConfig } from 'vite'
+// @ts-ignore
 import reactRefresh from '@vitejs/plugin-react-refresh'
+import {defineConfig} from 'vite'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  base: '/LuBan/',
-  plugins: [reactRefresh()],
+    build: {
+        base: '/luban/',
+        outDir: 'docs',
+    },
+    optimizeDeps: {
+        include: []
+    },
+    plugins: [reactRefresh()],
+    esbuild: {
+        jsxInject: "import React from 'react'",
+    },
+    css: {
+        preprocessorOptions: {
+          less: {
+            javascriptEnabled: true,
+          },
+        }
+      }    
 })

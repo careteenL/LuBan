@@ -1,46 +1,51 @@
-import React, { useState } from 'react'
-import 'antd/dist/antd.css'
-import { config } from './config'
-import { Editor } from './packages/Editor'
-import { EditorValue } from './packages/Editor.utils'
+import './app.scss'
+import {useState} from "react";
+import {ReactVisualEditor} from "./packages/ReactVisualEditor";
+import {visualEditorOption} from "./visual.config";
+import './iconfont.css'
+import json from './edit-data.json'
+import {notification} from "antd";
 
-function App() {
+const LOGO = 'https://t.focus-res.cn/front-end/fe-node/logo/v2/pc_logo.png'
 
-  const [editorValue, setEditorValue] = useState<EditorValue>({
-    container: {
-      height: 700,
-      width: 1000,
-    },
-    blocks: [
-      {
-        componentKey: 'text',
-        top: 100,
-        left: 100,
-        adjustPostion: true,
-        focus: false,
-      },
-      {
-        componentKey: 'button',
-        top: 200,
-        left: 200,
-        adjustPostion: true,
-        focus: false,
-      },
-      {
-        componentKey: 'input',
-        top: 300,
-        left: 300,
-        adjustPostion: true,
-        focus: false,
-      },
-    ],
-  })
+export default () => {
+    const [data, setData] = useState(json as any)
+    const [formData, setFormData] = useState({
+        username: 'admin000',
+        maxLevel: 100,
+        minLevel: 0,
+    })
 
-  return (
-    <div className="app-home">
-      <Editor value={editorValue} config={config} onChange={setEditorValue}></Editor>
-    </div>
-  )
+    const customProps = {
+        inputComponent: {
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                console.log(e)
+            }
+        },
+        buttonComponent: {
+            onClick: () => {
+                notification.open({
+                    message: '执行提交逻辑，校验表单数据',
+                    description: JSON.stringify(formData)
+                })
+            }
+        }
+    }
+
+    return (
+        <div className="app-home">
+            <div className='app-home-header'>
+                <img src={LOGO} className='app-home-header__logo' />
+                <span>智慧案场-鲁班</span>
+            </div>
+            <ReactVisualEditor value={data}
+                               onChange={setData}
+                               option={visualEditorOption}
+                               formData={formData}
+                               customProps={customProps}
+                               onFormDataChange={setFormData}/>
+            {/*<TestStaticCallback/>*/}
+            {JSON.stringify(formData)}
+        </div>
+    )
 }
-
-export default App
