@@ -17,24 +17,20 @@ const imgUploadUrl = 'http://mp-build.focus-test.cn/upload/img';
 
 export const visualEditorOption = createVisualEditorOption()
 
+// 可扩展其他组件
 visualEditorOption.registryComponent('ProFormItemWithCount', {
     name: '字符计数',
-    preview: () => (
+    preview: () => ( // 左侧预览
         <ProFormItemWithCount
           label="姓名"
           name="name"
           placeholder="请输入"
           maxCount={20}
           onlyChineseAsTwo={true}
-          inputProps={{
-            style: {
-                width: '70px'
-            }
-          }}
-          required
+          inputProps={{ style: { width: '70px' } }}
         />
     ),
-    render: ({props, model, custom}) => (
+    render: ({props, model, custom}) => ( // 中间操作区
         <ProFormItemWithCount
           label={props.label || '姓名'}
           name="name"
@@ -49,14 +45,14 @@ visualEditorOption.registryComponent('ProFormItemWithCount', {
           required={props.required}
         />
     ),
-    props: {
+    props: { // 右侧属性编辑区，可作用于 render 中
         label: createEditorInputProp('标签的文本'),
         maxCount: createEditorInputProp('最大字符数'),
         placeholder: createEditorInputProp('placeholder'),
         onlyChineseAsTwo: createEditorBooleanProp('是否将中文计为2字符'),
         required: createEditorBooleanProp('是否必填')
     },
-    model: {
+    model: { // 和 FormData 绑定
         default: '绑定字段',
     },
 })
