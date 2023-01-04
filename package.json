@@ -11,7 +11,7 @@
     "@focus/pro-datepicker": "^2.0.14",
     "@focus/pro-form-item-with-count": "^1.1.4",
     "@focus/pro-upload": "^1.1.1",
-    "antd": "4.24.7",
+    "antd": "^4.24.7",
     "classnames": "^2.2.6",
     "deepcopy": "^2.1.0",
     "moment": "^2.29.4",
