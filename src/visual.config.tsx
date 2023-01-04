@@ -17,7 +17,7 @@ const imgUploadUrl = 'http://mp-build.focus-test.cn/upload/img';
 
 export const visualEditorOption = createVisualEditorOption()
 
-// 可扩展其他组件
+// 可扩展注册其他组件
 visualEditorOption.registryComponent('ProFormItemWithCount', {
     name: '字符计数',
     preview: () => ( // 左侧预览

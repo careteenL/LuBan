@@ -42,10 +42,8 @@ export interface VisualEditorComponent {
 export type VisualEditorOption = ReturnType<typeof createVisualEditorOption>
 
 export function createVisualEditorOption() {
-
     const componentMap = {} as { [k: string]: VisualEditorComponent }
     const componentList = [] as VisualEditorComponent[]
-
     const registryComponent = <_,
         Props extends Record<string, VisualEditorProps> = {},
         Model extends Record<string, string> = {},
@@ -63,7 +61,6 @@ export function createVisualEditorOption() {
         model?: Model,
         resize?: { width?: boolean, height?: boolean },
     }) => {
-
         const comp = {
             ...component,
             key,
@@ -75,7 +72,6 @@ export function createVisualEditorOption() {
         componentMap[key] = comp
         componentList.push(comp)
     }
-
     return {
         componentMap,
         componentList,
