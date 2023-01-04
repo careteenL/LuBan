@@ -22,7 +22,7 @@ visualEditorOption.registryComponent('ProFormItemWithCount', {
     preview: () => (
         <ProFormItemWithCount
           label="姓名"
-          name="customerName"
+          name="name"
           placeholder="请输入"
           maxCount={20}
           onlyChineseAsTwo={true}
@@ -34,22 +34,31 @@ visualEditorOption.registryComponent('ProFormItemWithCount', {
           required
         />
     ),
-    render: ({props}) => (
+    render: ({props, model, custom}) => (
         <ProFormItemWithCount
           label={props.label || '姓名'}
-          name="customerName"
+          name="name"
           placeholder={props.placeholder || '请输入'}
           maxCount={props.maxCount || 20}
           onlyChineseAsTwo={Boolean(props.onlyChineseAsTwo)}
-          required
+          inputProps={{
+            value: model.default.value,
+            onChange: model.default.onChange,
+            ...custom
+          }}
+          required={props.required}
         />
     ),
     props: {
         label: createEditorInputProp('标签的文本'),
         maxCount: createEditorInputProp('最大字符数'),
         placeholder: createEditorInputProp('placeholder'),
-        onlyChineseAsTwo: createEditorBooleanProp('是否将中文计为2字符')
-    }
+        onlyChineseAsTwo: createEditorBooleanProp('是否将中文计为2字符'),
+        required: createEditorBooleanProp('是否必填')
+    },
+    model: {
+        default: '绑定字段',
+    },
 })
 
 visualEditorOption.registryComponent('ProUpload', {

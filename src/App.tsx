@@ -11,6 +11,7 @@ const LOGO = 'https://t.focus-res.cn/front-end/fe-node/logo/v2/pc_logo.png'
 export default () => {
     const [data, setData] = useState(json as any)
     const [formData, setFormData] = useState({
+        name: '',
         username: 'admin000',
         maxLevel: 100,
         minLevel: 0,
