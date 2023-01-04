@@ -3,9 +3,7 @@ import {Button, Form, Input, Select} from 'antd'
 import {createEditorBooleanProp, createEditorColorProp, createEditorInputProp, createEditorSelectProp, createEditorTableProp} from "./packages/ReactVisualEditor.props";
 import {NumberRange} from "./packages/components/NumberRange/NumberRange";
 import {PictureOutlined} from "@ant-design/icons";
-import ProFormItemWithCount from '@focus/pro-form-item-with-count';
-import ProDatepicker from '@focus/pro-datepicker';
-import ProUpload from '@focus/pro-upload';
+
 import moment from 'moment';
 
 const OctoberTime = [
