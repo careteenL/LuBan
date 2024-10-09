@@ -5,8 +5,8 @@ import { visualEditorOption } from "./visual.config";
 import "./iconfont.css";
 import json from "./edit-data.json";
 import { notification } from "antd";
-
-const LOGO = "https://res.bodiantech.cn/front-end/fe-node/logo/v2/pc_logo.png";
+import { GithubOutlined } from "@ant-design/icons";
+import LOGO from "./assets/logo";
 
 export default () => {
   const [data, setData] = useState(json as any);
@@ -33,11 +33,22 @@ export default () => {
     },
   };
 
+  function goHome() {
+    window.open("http://careteen.cn/", "_blank");
+  }
+
+  function goGithub() {
+    window.open("https://github.com/careteenL/LuBan", "_blank");
+  }
+
   return (
     <div className="app-home">
       <div className="app-home-header">
-        <img src={LOGO} className="app-home-header__logo" />
-        <span>智慧案场-鲁班</span>
+        <div>
+          <img src={LOGO} className="app-home-header__logo" onClick={goHome} />
+          <span>鲁班</span>
+        </div>
+        <GithubOutlined className="github" onClick={goGithub} />
       </div>
       <ReactVisualEditor
         value={data}
