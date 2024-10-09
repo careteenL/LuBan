@@ -1,4 +1,4 @@
-import {VisualEditorProps} from "./ReactVisualEditor.props";
+import { VisualEditorProps } from "./ReactVisualEditor.props";
 
 export interface VisualEditorBlock {
     componentKey: string, // 组件唯一标示
@@ -48,7 +48,7 @@ export function createVisualEditorOption() {
     const registryComponent = <_,
         Props extends Record<string, VisualEditorProps> = {},
         Model extends Record<string, string> = {},
-        >(key: string, component: {
+    >(key: string, component: {
         name: string,
         preview: () => JSX.Element,
         render: (data: {
