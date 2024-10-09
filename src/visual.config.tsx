@@ -1,3 +1,4 @@
+// @ts-ignore
 import { createVisualEditorOption } from "./packages/ReactVisualEditor.utils";
 import { Button, Form, Input, Select, Upload, DatePicker } from "antd";
 import {
