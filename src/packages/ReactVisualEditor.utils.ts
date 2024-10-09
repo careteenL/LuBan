@@ -1,26 +1,27 @@
 import {VisualEditorProps} from "./ReactVisualEditor.props";
 
 export interface VisualEditorBlock {
-    componentKey: string,
-    focus: boolean,
-    top: number,
-    left: number,
-    height: number,
-    width: number,
-    hasResize: boolean,                                             // 是否调整过宽度或者高度
-    slotName?: string,
-    adjustPosition?: boolean,
-    zIndex: number,
-    props?: Record<string, any>,
-    model?: Record<string, string>,
+    componentKey: string, // 组件唯一标示
+    focus: boolean, // 是否为选中态
+    top: number, // 绝对定位 top 值
+    left: number, // 绝对定位 left 值
+    height: number, // 组件高度
+    width: number, // 组件宽度
+    hasResize: boolean, // 是否调整过宽度或者高度
+    slotName?: string, // 绑定值
+    adjustPosition?: boolean, // 是否需要调整位置
+    zIndex: number, // 层级
+    props?: Record<string, any>, // 右侧操作区自定义可变属性 【与 @focus/pro-components 字段相对应】
+    model?: Record<string, string>, // 和 FormData 绑定
 }
 
+// JSON schema 定义
 export interface VisualEditorValue {
     container: {
-        height: number,                                             // 容器高度
-        width: number,                                              // 容器宽度
+        height: number, // 容器高度
+        width: number, // 容器宽度
     },
-    blocks: VisualEditorBlock[],                                    // block数据
+    blocks: VisualEditorBlock[], // block数据
 }
 
 export interface VisualEditorComponent {
@@ -42,10 +43,8 @@ export interface VisualEditorComponent {
 export type VisualEditorOption = ReturnType<typeof createVisualEditorOption>
 
 export function createVisualEditorOption() {
-
     const componentMap = {} as { [k: string]: VisualEditorComponent }
     const componentList = [] as VisualEditorComponent[]
-
     const registryComponent = <_,
         Props extends Record<string, VisualEditorProps> = {},
         Model extends Record<string, string> = {},
@@ -63,7 +62,6 @@ export function createVisualEditorOption() {
         model?: Model,
         resize?: { width?: boolean, height?: boolean },
     }) => {
-
         const comp = {
             ...component,
             key,
@@ -75,7 +73,6 @@ export function createVisualEditorOption() {
         componentMap[key] = comp
         componentList.push(comp)
     }
-
     return {
         componentMap,
         componentList,

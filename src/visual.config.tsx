@@ -15,89 +15,94 @@ const imgUploadUrl = 'http://mp-build.focus-test.cn/upload/img';
 
 export const visualEditorOption = createVisualEditorOption()
 
-// visualEditorOption.registryComponent('ProFormItemWithCount', {
-//     name: '字符计数',
-//     preview: () => (
-//         <ProFormItemWithCount
-//           label="姓名"
-//           name="customerName"
-//           placeholder="请输入"
-//           maxCount={20}
-//           onlyChineseAsTwo={true}
-//           inputProps={{
-//             style: {
-//                 width: '70px'
-//             }
-//           }}
-//           required
-//         />
-//     ),
-//     render: ({props}) => (
-//         <ProFormItemWithCount
-//           label={props.label || '姓名'}
-//           name="customerName"
-//           placeholder={props.placeholder || '请输入'}
-//           maxCount={props.maxCount || 20}
-//           onlyChineseAsTwo={Boolean(props.onlyChineseAsTwo)}
-//           required
-//         />
-//     ),
-//     props: {
-//         label: createEditorInputProp('标签的文本'),
-//         maxCount: createEditorInputProp('最大字符数'),
-//         placeholder: createEditorInputProp('placeholder'),
-//         onlyChineseAsTwo: createEditorBooleanProp('是否将中文计为2字符')
-//     }
-// })
+// 可扩展注册其他组件
+visualEditorOption.registryComponent('ProFormItemWithCount', {
+    name: '字符计数',
+    preview: () => ( // 左侧预览
+        <ProFormItemWithCount
+          label="姓名"
+          name="name"
+          placeholder="请输入"
+          maxCount={20}
+          onlyChineseAsTwo={true}
+          inputProps={{ style: { width: '70px' } }}
+        />
+    ),
+    render: ({props, model, custom}) => ( // 中间操作区
+        <ProFormItemWithCount
+          label={props.label || '姓名'}
+          name="name"
+          placeholder={props.placeholder || '请输入'}
+          maxCount={props.maxCount || 20}
+          onlyChineseAsTwo={Boolean(props.onlyChineseAsTwo)}
+          inputProps={{
+            value: model.default.value,
+            onChange: model.default.onChange,
+            ...custom
+          }}
+          required={props.required}
+        />
+    ),
+    props: { // 右侧属性编辑区，可作用于 render 中
+        label: createEditorInputProp('标签的文本'),
+        maxCount: createEditorInputProp('最大字符数'),
+        placeholder: createEditorInputProp('placeholder'),
+        onlyChineseAsTwo: createEditorBooleanProp('是否将中文计为2字符'),
+        required: createEditorBooleanProp('是否必填')
+    },
+    model: { // 和 FormData 绑定
+        default: '绑定字段',
+    },
+})
 
-// visualEditorOption.registryComponent('ProUpload', {
-//     name: '图片上传',
-//     preview: () => (
-//         <Item
-//             label="背景图"
-//             name="bgImg"
-//             extra={<p className="tip-text">提示语</p>}
-//             rules={[
-//                 {
-//                     required: true,
-//                     message: '请先上传图片',
-//                 },
-//             ]}
-//         >
-//             <ProUpload action={imgUploadUrl} name="image" />
-//         </Item>
-//     ),
-//     render: ({props}) => (
-//         <Item
-//             label={props.label || '背景图'}
-//             name="bgImg"
-//             extra={<p className="tip-text">{props.tip || '上传650*520尺寸图片，支持jpg和png格式，限制10M以内'}</p>}
-//             rules={[
-//                 {
-//                     required: true,
-//                     message: '请上传图片',
-//                 },
-//             ]}
-//         >
-//             <ProUpload action={props.imgUploadUrl || imgUploadUrl} name="image" />
-//         </Item>
-//     ),
-//     props: {
-//         label: createEditorInputProp('标签的文本'),
-//         tip: createEditorInputProp('提示语'),        
-//         imgUploadUrl: createEditorInputProp('上传地址'),        
-//     }
-// })
+visualEditorOption.registryComponent('ProUpload', {
+    name: '图片上传',
+    preview: () => (
+        <Item
+            label="背景图"
+            name="bgImg"
+            extra={<p className="tip-text">提示语</p>}
+            rules={[
+                {
+                    required: true,
+                    message: '请先上传图片',
+                },
+            ]}
+        >
+            <ProUpload action={imgUploadUrl} name="image" />
+        </Item>
+    ),
+    render: ({props}) => (
+        <Item
+            label={props.label || '背景图'}
+            name="bgImg"
+            extra={<p className="tip-text">{props.tip || '上传650*520尺寸图片，支持jpg和png格式，限制10M以内'}</p>}
+            rules={[
+                {
+                    required: true,
+                    message: '请上传图片',
+                },
+            ]}
+        >
+            <ProUpload action={props.imgUploadUrl || imgUploadUrl} name="image" />
+        </Item>
+    ),
+    props: {
+        label: createEditorInputProp('标签的文本'),
+        tip: createEditorInputProp('提示语'),        
+        imgUploadUrl: createEditorInputProp('上传地址'),        
+    }
+})
 
-// visualEditorOption.registryComponent('ProDatepicker', {
-//     name: '日期选择器',
-//     preview: () => (
-//         <ProDatepicker.RangePicker showTime timeSelectRange={OctoberTime} />
-//     ),
-//     render: () => (
-//         <ProDatepicker.RangePicker showTime timeSelectRange={OctoberTime} />
-//     )
-// })
+visualEditorOption.registryComponent('ProDatepicker', {
+    name: '日期选择器',
+    preview: () => (
+        <ProDatepicker.RangePicker showTime timeSelectRange={OctoberTime} />
+    ),
+    render: () => (
+        <ProDatepicker.RangePicker showTime timeSelectRange={OctoberTime} />
+    )
+})
 
 visualEditorOption.registryComponent('text', {
     name: '文本',
