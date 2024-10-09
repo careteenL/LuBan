@@ -1,0 +1,21 @@
+.form-item-with-count {
+  word-break: break-all; // 测试那边会拿全英文/数字来测试，所以需要这行。实际客户使用应该不太会这样
+
+  &.edit {
+    white-space: nowrap; // FIX: ZHAC-4537
+  }
+
+  .inner-form-item {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+
+  // form 表单实时展示字数的文本
+  .real-time-text {
+    margin-left: 10px;
+    color: #bfbfbf;
+    line-height: 32px;
+    white-space: nowrap;
+    // vertical-align: top;
+  }
+}
